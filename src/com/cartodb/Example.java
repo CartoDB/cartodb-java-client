@@ -15,12 +15,12 @@ public class Example {
         CartoDBClient client = CartoDBClient.getInstance();
 
         System.out.println("--------- RESPONSE WITHOUT PARAMS  ------------");
-        System.out.println(client.query("select * from ccaa", CartoDBClient.SQL_API_V1));
+        System.out.println(client.query("select * from table", CartoDBClient.SQL_API_V1));
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("format", "geojson");
         System.out.println("--------- RESPONSE WIT PARAMS  ------------");
-        System.out.println(client.query("select * from ccaa", CartoDBClient.SQL_API_V1, params));
+        System.out.println(client.query("select * from table", CartoDBClient.SQL_API_V1, params));
     }
 
 }
