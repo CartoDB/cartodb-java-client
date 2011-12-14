@@ -5,37 +5,78 @@ import org.scribe.builder.*;
 import org.scribe.model.*;
 import org.scribe.oauth.*;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 /**
- * sample code to access cartodb
+ * CartoDB Client
  * @author javi
  *
  */
-public class CartoDBClient
-{
-	
-	protected static String user =  "YOURUSERNAME";
-	protected static String password =  "YOUPASSWORD";
-	protected static String CONSUMER_KEY="YOUR_CARTODB_CONSUMER";
-	protected static String CONSUMER_SECRET="YOUR_CARTODB_SECRET";
+public class CartoDBClient {
 
-	// sample SQL
-	private static final String PROTECTED_RESOURCE_URL = "https://yourusuer.cartodb.com/api/v1/sql?q=select%20*%20from%20table";
+    private String user;
+    private String password;
+    private String consumerKey;
+    private String consumerSecret;
 
-	public static void main(String[] args)
-	{
-		OAuthService service = new ServiceBuilder()
-			.provider(new CartoDBAPI.SSL(user, password))
-			.apiKey(CONSUMER_KEY)
-			.apiSecret(CONSUMER_SECRET)
-			.build();
+    private Token accessToken;
+    private OAuthService service;
 
-		Token accessToken = service.getAccessToken(null, null);
-		// you could save the token attributes to use it later
-		OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
-		service.signRequest(accessToken, request);
-		Response response = request.send();
-		System.out.println("--- response ---");
-		System.out.println(response.getBody());
-  }
+    private static CartoDBClient instance = null;
+
+    public static String SQL_API_V1 = "v1";
+
+    private CartoDBClient() {
+        Properties cartodbConf = new Properties();
+        try {
+            cartodbConf.load(CartoDBClient.class.getResourceAsStream("/com/cartodb/cartodb.properties"));
+            user = cartodbConf.getProperty("cartodb.user");
+            password = cartodbConf.getProperty("cartodb.password");
+            consumerKey = cartodbConf.getProperty("cartodb.consumerKey");
+            consumerSecret = cartodbConf.getProperty("cartodb.consumerSecret");
+
+            service = new ServiceBuilder()
+                .provider(new CartoDBAPI.SSL(user, password))
+                .apiKey(consumerKey)
+                .apiSecret(consumerSecret)
+                .build();
+
+            accessToken = service.getAccessToken(null, null);
+        } catch (IOException e) {
+            System.out.println("Error:" + e);
+        }
+    }
+
+    public static CartoDBClient getInstance() {
+        if (instance == null) {
+            instance = new CartoDBClient();
+        }
+        return instance;
+    }
+
+    public String query(String sql, String version, Map<String,String> params) {
+        try {
+            String url = "https://"+user+".cartodb.com/api/"+version+"/sql?q=" + URLEncoder.encode(sql, "UTF-8");
+            for (String key : params.keySet()) {
+                url += "&"+key+"="+params.get(key);
+            }
+            OAuthRequest request = new OAuthRequest(Verb.GET, url);
+            service.signRequest(accessToken, request);
+            Response response = request.send();
+            return (response.getBody());
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("Error:" + e);
+            return "{}";
+        }
+    }
+
+    public String query(String sql, String version) {
+        return query(sql, version, new HashMap<String,String>());
+    }
 
 }

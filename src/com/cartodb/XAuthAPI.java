@@ -19,11 +19,11 @@ public class XAuthAPI extends DefaultApi10a {
 	public String getRequestTokenEndpoint() {
 		return null;
 	}
-	
+
 	public String getUsername() {
 		throw new UnsupportedOperationException("getUsername method must be implemented");
 	}
-	
+
 	public String getPassword() {
 		throw new UnsupportedOperationException("getPassword method must be implemented");
 	}

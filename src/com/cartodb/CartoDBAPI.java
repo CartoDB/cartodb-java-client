@@ -3,71 +3,62 @@ package com.cartodb;
 import org.scribe.model.OAuthConfig;
 import org.scribe.oauth.OAuthService;
 
-public class CartoDBAPI extends XAuthAPI
-{
-  private static final String REQUEST_TOKEN_RESOURCE = ".cartodb.com/oauth/request_token";
-  private static final String ACCESS_TOKEN_RESOURCE = ".cartodb.com/oauth/access_token";
-  
-  protected String username;
-  protected String password;
-  
-  CartoDBAPI(String user, String password) {
-	  this.username = user;
-	  this.password = password;
-  }
-  
-  public String getUsername() {
-	  return username;
-  }
-	
-  public String getPassword() {
-	  return password;
-  }
+public class CartoDBAPI extends XAuthAPI {
+    private static final String REQUEST_TOKEN_RESOURCE = ".cartodb.com/oauth/request_token";
+    private static final String ACCESS_TOKEN_RESOURCE = ".cartodb.com/oauth/access_token";
 
-	
-  @Override
-  public OAuthService createService(OAuthConfig config)
-  {
-    return new XAuth(this, config);
-  }
-		  
-  @Override
-  public String getAccessTokenEndpoint()
-  {
-    return "http://" + username +  ACCESS_TOKEN_RESOURCE;
-  }
+    protected String username;
+    protected String password;
 
-  @Override
-  public String getRequestTokenEndpoint()
-  {
-    return "http://" + username + REQUEST_TOKEN_RESOURCE;
-  }
+    public CartoDBAPI(String user, String password) {
+        this.username = user;
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
 
-  public static class SSL extends CartoDBAPI
-  {
-    SSL(String user, String password) {
-		super(user, password);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-    public String getAccessTokenEndpoint()
-    {
-      return "https://" + username + ACCESS_TOKEN_RESOURCE;
+    @Override
+    public OAuthService createService(OAuthConfig config) {
+        return new XAuth(this, config);
     }
 
     @Override
-    public String getRequestTokenEndpoint()
-    {
-      return "https://" + username + REQUEST_TOKEN_RESOURCE;
+    public String getAccessTokenEndpoint() {
+        return "http://" + username + ACCESS_TOKEN_RESOURCE;
     }
-    
-    public OAuthService createService(OAuthConfig config)
-    {
-      return new XAuth(this, config);
+
+    @Override
+    public String getRequestTokenEndpoint() {
+        return "http://" + username + REQUEST_TOKEN_RESOURCE;
     }
-  }
+
+
+    public static class SSL extends CartoDBAPI {
+        public SSL(String user, String password) {
+            super(user, password);
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public String getAccessTokenEndpoint() {
+            return "https://" + username + ACCESS_TOKEN_RESOURCE;
+        }
+
+        @Override
+        public String getRequestTokenEndpoint() {
+            return "https://" + username + REQUEST_TOKEN_RESOURCE;
+        }
+
+        public OAuthService createService(OAuthConfig config) {
+            return new XAuth(this, config);
+        }
+    }
 
 }
-
