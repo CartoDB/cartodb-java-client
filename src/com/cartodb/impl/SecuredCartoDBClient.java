@@ -1,0 +1,102 @@
+package com.cartodb.impl;
+
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Response;
+import org.scribe.model.Token;
+import org.scribe.model.Verb;
+import org.scribe.oauth.OAuthService;
+
+import com.cartodb.CartoDBAPI;
+import com.cartodb.CartoDBClientIF;
+
+/**
+ * CartoDB client implementation to access protected resources on CartoDB using OAuth.
+ * You can perform any SQL queries so please, be careful.
+ * @author canadensys
+ *
+ */
+public class SecuredCartoDBClient implements CartoDBClientIF{
+	
+	private static final String SQL_API_BASE_URL = "https://%s.cartodb.com/api/v1/sql";
+	
+	private OAuthService oAuthService = null;
+	private Token accessToken = null;
+	private String securedApiUrl = null;
+	
+	private String user;
+	private String password;
+	private String consumerKey;
+	private String consumerSecret;
+	
+	/**
+	 * Default constructor
+	 */
+	public SecuredCartoDBClient(){}
+	
+	/**
+	 * After this constructor, the object is ready to use.
+	 * @param user
+	 * @param password
+	 * @param consumerKey
+	 * @param consumerSecret
+	 */
+	public SecuredCartoDBClient(String user, String password, String consumerKey, String consumerSecret){
+		this.user = user;
+		this.password = password;
+		this.consumerKey = consumerKey;
+		this.consumerSecret = consumerSecret;
+		init();
+	}
+	
+	/**
+	 * Initialization method for a secured CartoDB client.
+	 * You only need it if you're using the default constructor.
+	 */
+	public void init(){
+		oAuthService = new ServiceBuilder()
+			.provider(new CartoDBAPI.SSL(user, password))
+			.apiKey(consumerKey)
+			.apiSecret(consumerSecret)
+			.build();
+		accessToken = oAuthService.getAccessToken(null, null);
+		securedApiUrl = String.format(SQL_API_BASE_URL, user);
+	}
+
+	@Override
+	public String executeQuery(String sqlQuery){
+		String json = null;
+		if(oAuthService == null){
+			System.out.println("Please call init() before use.");
+			return null;
+		}
+		
+		OAuthRequest request = new OAuthRequest(Verb.POST, securedApiUrl);
+		request.addBodyParameter("q", sqlQuery);
+		oAuthService.signRequest(accessToken, request);
+		
+		Response response = request.send();
+		
+		if(!response.isSuccessful()){
+			System.out.println("The query " + sqlQuery + " failed.");
+			System.out.println("Response code : " + response.getCode());
+		}
+		json = response.getBody();
+		return json;
+	}
+	
+	public void setConsumerKey(String consumerKey) {
+		this.consumerKey = consumerKey;
+	}
+	public void setConsumerSecret(String consumerSecret) {
+		this.consumerSecret = consumerSecret;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+}

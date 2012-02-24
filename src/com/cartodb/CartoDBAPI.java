@@ -11,7 +11,7 @@ public class CartoDBAPI extends XAuthAPI
   protected String username;
   protected String password;
   
-  CartoDBAPI(String user, String password) {
+  public CartoDBAPI(String user, String password) {
 	  this.username = user;
 	  this.password = password;
   }
@@ -46,9 +46,8 @@ public class CartoDBAPI extends XAuthAPI
 
   public static class SSL extends CartoDBAPI
   {
-    SSL(String user, String password) {
+    public SSL(String user, String password) {
 		super(user, password);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
