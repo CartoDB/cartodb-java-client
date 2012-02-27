@@ -1,0 +1,38 @@
+<project name="cartodb-java-client" default="jar" basedir=".">
+	
+	<property name="code.build" value="build" />
+	<property name="lib.dir" value="lib" />
+	<property name="file.name" value="cartodb-java-client.jar"/>
+
+	<target name="init" depends="clean" description="Creates directories">
+		<mkdir dir="${code.build}" />
+	</target>
+
+	<target name="clean" description="Removes all generated files.">
+		<delete dir="${code.build}" />
+	</target>
+	
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset> 
+	</path>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="${code.build}" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+   	<manifestclasspath property="lib.list" jarfile="${code.build}/${file.name}">
+	    <classpath refid="compile.classpath"/>
+	   </manifestclasspath>
+   
+		<jar destfile="${code.build}/${file.name}" basedir="${code.build}"/>
+		<copy todir="${code.build}/${lib.dir}">
+			<fileset dir ="${lib.dir}"/>
+		</copy>
+		<echo>${file.name} ready</echo>
+	</target>
+</project>
