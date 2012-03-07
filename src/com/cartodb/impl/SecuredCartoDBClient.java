@@ -18,10 +18,12 @@ import com.cartodb.CartoDBClientIF;
  */
 public class SecuredCartoDBClient implements CartoDBClientIF{
 	
-	private static final String SQL_API_BASE_URL = "https://%s.cartodb.com/api/v1/sql";
+	private static final String DEFAULT_API_VERSION = "1";
+	private static final String SQL_API_BASE_URL = "https://%s.cartodb.com/api/v%s/sql";
 	
 	private OAuthService oAuthService = null;
 	private Token accessToken = null;
+	private String apiVersion = DEFAULT_API_VERSION;
 	private String securedApiUrl = null;
 	
 	private String user;
@@ -60,17 +62,22 @@ public class SecuredCartoDBClient implements CartoDBClientIF{
 			.apiSecret(consumerSecret)
 			.build();
 		accessToken = oAuthService.getAccessToken(null, null);
-		securedApiUrl = String.format(SQL_API_BASE_URL, user);
+		securedApiUrl = String.format(SQL_API_BASE_URL, user, apiVersion);
 	}
-
+	
+	/**
+	 * Send a sqlQuery (or command) to the CartoDB server.
+	 * The query/command will be sent in the body of a POST so, it's possible to send
+	 * a large query/command string.
+	 * @param sqlQuery 
+	 */
 	@Override
 	public String executeQuery(String sqlQuery){
 		String json = null;
 		if(oAuthService == null){
-			System.out.println("Please call init() before use.");
+			System.out.println("Error : uninitialized " + getClass().getName());
 			return null;
 		}
-		
 		OAuthRequest request = new OAuthRequest(Verb.POST, securedApiUrl);
 		request.addBodyParameter("q", sqlQuery);
 		oAuthService.signRequest(accessToken, request);
@@ -98,5 +105,12 @@ public class SecuredCartoDBClient implements CartoDBClientIF{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	/**
+	 * Set the API version to use.
+	 * @param apiVersion number part only as String
+	 */
+	public void setApiVersion(String apiVersion){
+		this.apiVersion = apiVersion;
+	}
 }
