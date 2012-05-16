@@ -9,7 +9,7 @@ send queries to CartoDB and get a JSON string as response.
 With this library you have access to private and public tables. In order to access to public tables you do not need to be authenticated
 but if you want to read or write data to a private table or write data to a public table you need to.
 
-CartoDB provices two ways to auth, oauth or api key, please read [CartoDB Authentication documentation](http://developers.cartodb.com/documentation/cartodb-apis.html#authentication) for detailed info on this topic.
+CartoDB provides two ways to auth, oauth or api key, please read [CartoDB Authentication documentation](http://developers.cartodb.com/documentation/cartodb-apis.html#authentication) for detailed info on this topic.
 
 
 ### Using oAuth
