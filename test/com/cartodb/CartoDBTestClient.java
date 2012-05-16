@@ -39,5 +39,11 @@ public class CartoDBTestClient {
 		
 	  
 	}
+	
+	@Test
+	public void testClientSQLInsert() throws CartoDBException {
+		CartoDBResponse<Map<String, Object>> res = cartoDBCLient.request("insert into " + Secret.EXISTING_TABLE_WITH_DATA + " (name) values ('test')");
+		assertEquals(res.getTotal_rows(), 0);
+	}
 
 }
