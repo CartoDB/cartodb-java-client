@@ -9,6 +9,7 @@ import org.scribe.oauth.OAuthService;
 
 import com.cartodb.CartoDBAPI;
 import com.cartodb.CartoDBClientIF;
+import com.cartodb.CartoDBException;
 
 /**
  * CartoDB client implementation to access protected resources on CartoDB using OAuth.
@@ -16,7 +17,7 @@ import com.cartodb.CartoDBClientIF;
  * @author canadensys
  *
  */
-public class SecuredCartoDBClient implements CartoDBClientIF{
+public class SecuredCartoDBClient extends CartoDBClientIF{
 	
 	private static final String DEFAULT_API_VERSION = "1";
 	private static final String SQL_API_BASE_URL = "https://%s.cartodb.com/api/v%s/sql";
@@ -72,7 +73,7 @@ public class SecuredCartoDBClient implements CartoDBClientIF{
 	 * @param sqlQuery 
 	 */
 	@Override
-	public String executeQuery(String sqlQuery){
+	public String executeQuery(String sqlQuery) throws CartoDBException {
 		String json = null;
 		if(oAuthService == null){
 			System.out.println("Error : uninitialized " + getClass().getName());
