@@ -80,12 +80,12 @@ public class CartoDBClient extends CartoDBClientIF{
 			json = IOUtils.toString(new URL(apiURL+sqlQuery), ENCODING);
 		} catch (MalformedURLException e) {
 			System.out.println("Could not get URL " + apiURL+sqlQuery);
-			e.printStackTrace();
+			throw new CartoDBException(e.getMessage());
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}catch (IOException e) {
+			throw new CartoDBException(e.getMessage());
+		} catch (IOException e) {
 			System.out.println("Could not execute " + sqlQuery+ " on CartoDB : ");
-			e.printStackTrace();
+			throw new CartoDBException(e.getMessage());
 		}
 		return json;
 	}
