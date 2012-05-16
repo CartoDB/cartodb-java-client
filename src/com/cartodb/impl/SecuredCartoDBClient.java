@@ -1,5 +1,9 @@
 package com.cartodb.impl;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -86,8 +90,7 @@ public class SecuredCartoDBClient extends CartoDBClientIF{
 		Response response = request.send();
 		
 		if(!response.isSuccessful()){
-			System.out.println("The query " + sqlQuery + " failed.");
-			System.out.println("Response code : " + response.getCode());
+			throw new CartoDBException("The query " + sqlQuery + " failed. Response code : " + response.getCode());
 		}
 		json = response.getBody();
 		return json;
