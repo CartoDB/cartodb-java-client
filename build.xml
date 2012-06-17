@@ -25,11 +25,13 @@
 	</target>
 
 	<target name="jar" depends="compile">
-   	<manifestclasspath property="lib.list" jarfile="${code.build}/${file.name}">
+     <manifestclasspath property="lib.list" jarfile="${code.build}/${file.name}">
 	    <classpath refid="compile.classpath"/>
-	   </manifestclasspath>
+     </manifestclasspath>
    
-		<jar destfile="${code.build}/${file.name}" basedir="${code.build}"/>
+     <jar destfile="${code.build}/${file.name}" basedir="${code.build}">
+       <zipgroupfileset dir="lib" includes="*.jar" /> 
+     </jar>
 		<copy todir="${code.build}/${lib.dir}">
 			<fileset dir ="${lib.dir}"/>
 		</copy>
