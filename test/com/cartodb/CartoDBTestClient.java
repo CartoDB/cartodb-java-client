@@ -45,5 +45,13 @@ public class CartoDBTestClient {
 		CartoDBResponse<Map<String, Object>> res = cartoDBCLient.request("insert into " + Secret.EXISTING_TABLE_WITH_DATA + " (name) values ('test')");
 		assertEquals(res.getTotal_rows(), 0);
 	}
-
+	
+	@Test
+	public void testIsWrite() {
+		assertEquals(CartoDBClientIF.isWriteQuery("select * from bla"), false);
+		assertEquals(CartoDBClientIF.isWriteQuery("updatE blabala"), true);
+		assertEquals(CartoDBClientIF.isWriteQuery("deleTe from bla"), true);
+		assertEquals(CartoDBClientIF.isWriteQuery("INSERT into ...from bla"), true);
+	}
+	
 }

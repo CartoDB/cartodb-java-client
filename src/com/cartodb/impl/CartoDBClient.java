@@ -61,6 +61,7 @@ public class CartoDBClient extends CartoDBClientIF{
 		apiURL = String.format(SQL_API_BASE_URL, user, apiVersion);
 	}
 	
+	
 	/**
 	 * Send a sqlQuery to the CartoDB server.
 	 * The query will be sent in a URL parameter of a GET so, you should avoid very large query string.

@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public abstract class CartoDBClientIF {
 	
+	public int MAX_SQL_GET_LENGTH = 1024;
+	
 	ObjectMapper jsonMapper = new ObjectMapper();
 	/**
 	 * Executes a query on the CartoDB server
@@ -43,6 +45,22 @@ public abstract class CartoDBClientIF {
 			throw new CartoDBException(e.getMessage());
 		}
 		return response;
+	}
+	
+	/**
+	 * return true if the query writes
+	 * @param sql
+	 * @return
+	 */
+	public static boolean isWriteQuery(String sql) {
+		String sqlLower = sql.toLowerCase();
+		if(sqlLower.indexOf("insert") != -1 ||
+		   sqlLower.indexOf("update") != -1 ||
+		   sqlLower.indexOf("delete") != -1 ||
+		   sqlLower.indexOf("create") != -1) {
+			return true;
+		}
+		return false;
 	}
 	
 
