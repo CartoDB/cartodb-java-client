@@ -50,3 +50,6 @@ _Included in lib folder_
 
 ##TODO
 * Include error JSON on HTTP response 400.
+
+## License
+read LICENSE file
