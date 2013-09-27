@@ -1,4 +1,6 @@
-
+.classpath
+.project
 *.class
 bin
 test/com/cartodb/Secret.java
+target/
