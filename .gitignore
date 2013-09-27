@@ -2,5 +2,5 @@
 .project
 *.class
 bin
-test/com/cartodb/Secret.java
+src/test/com/cartodb/Secret.java
 target/
