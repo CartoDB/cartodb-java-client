@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+archivesBaseName = 'cartodb-java-client'
+
+version = '0.2'
+
+project.group = 'cartodb-java-client'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+	compile 'commons-codec:commons-codec:1.6'
+	compile 'commons-io:commons-io:2.1'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.0.2'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.0.2'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.0.2'
+	compile 'org.scribe:scribe:1.2.3'
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src'
+		}
+	}
+}
+
+buildDir = new File('gradleBuild')
