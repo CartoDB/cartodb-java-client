@@ -2,3 +2,5 @@
 *.class
 bin
 test/com/cartodb/Secret.java
+.gradle/
+gradleBuild/
