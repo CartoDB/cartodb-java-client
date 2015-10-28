@@ -2,12 +2,15 @@ package com.cartodb.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties; 
+
 /**
  * Represents a typical CartoDB response object.
  * @author canadensys
  *
  * @param <T> Type of the object represented by the sent query.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CartoDBResponse<T> {
 	
 	private double time;
