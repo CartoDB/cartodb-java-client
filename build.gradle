@@ -8,7 +8,7 @@ version = '0.2'
 project.group = 'cartodb-java-client'
 
 repositories {
-    jcenter()
+    //jcenter()
     mavenCentral()
 }
 
