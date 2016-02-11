@@ -40,7 +40,6 @@ public abstract class CartoDBClientIF {
 		CartoDBResponse<T> response;
 		try {
 			response = jsonMapper.readValue(json, new TypeReference<CartoDBResponse<T>>(){});
-			
 		} catch (Exception e) {
 			throw new CartoDBException(e.getMessage());
 		}

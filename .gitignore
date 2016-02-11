@@ -1,6 +1,11 @@
-
 *.class
 bin
 test/com/cartodb/Secret.java
 .gradle/
 gradleBuild/
+.idea/
+*.iml
+gradlew
+gradle/
+gradlew.bat
+gradle.bat
