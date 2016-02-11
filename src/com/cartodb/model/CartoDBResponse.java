@@ -1,6 +1,7 @@
 package com.cartodb.model;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a typical CartoDB response object.
@@ -12,6 +13,7 @@ public class CartoDBResponse<T> {
 	
 	private double time;
 	private int total_rows;
+	private Map<String, Map<String, String>> fields;
 	private List<T> rows;
 	
 	public double getTime() {
@@ -33,4 +35,11 @@ public class CartoDBResponse<T> {
 		this.rows = rows;
 	}
 
+	public Map<String, Map<String, String>> getFields() {
+		return fields;
+	}
+
+	public void setFields(Map<String, Map<String, String>> fields) {
+		this.fields = fields;
+	}
 }
