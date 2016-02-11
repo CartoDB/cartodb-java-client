@@ -7,6 +7,16 @@ version = '0.2'
 
 project.group = 'cartodb-java-client'
 
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'CartoDB Java Client',
+                'Implementation-Version': version
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 repositories {
     jcenter()
     mavenCentral()

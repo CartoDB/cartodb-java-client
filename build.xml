@@ -1,5 +1,4 @@
 <project name="cartodb-java-client" default="jar" basedir=".">
-<project name="cartodb-java-client" default="jar" basedir=".">
 
 	<property name="code.build" value="build" />
 	<property name="lib.dir" value="lib" />
@@ -26,16 +25,12 @@
 	</target>
 
 	<target name="jar" depends="compile">
-     <manifestclasspath property="lib.list" jarfile="${code.build}/${file.name}">
-	    <classpath refid="compile.classpath"/>
-     </manifestclasspath>
-   
-     <jar destfile="${code.build}/${file.name}" basedir="${code.build}">
-       <zipgroupfileset dir="lib" includes="*.jar" /> 
-     </jar>
-		<copy todir="${code.build}/${lib.dir}">
-			<fileset dir ="${lib.dir}"/>
-		</copy>
-		<echo>${file.name} ready</echo>
+		 <manifestclasspath property="lib.list" jarfile="${code.build}/${file.name}">
+			<classpath refid="compile.classpath"/>
+		 </manifestclasspath>
+
+		 <jar destfile="${code.build}/${file.name}" basedir="${code.build}">
+		   <zipgroupfileset dir="lib" includes="*.jar" />
+		 </jar>
 	</target>
 </project>
