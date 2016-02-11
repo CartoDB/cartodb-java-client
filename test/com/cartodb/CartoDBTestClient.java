@@ -33,7 +33,7 @@ public class CartoDBTestClient {
 		assertEquals(res.getTotal_rows(), 1);
 		assertTrue((Integer)res.getRows().get(0).get("cartodb_id") > 0);
 	}
-	
+
 	@Test
 	public void testClientSQLInsert() throws CartoDBException {
 		CartoDBResponse<Map<String, Object>> res = cartoDBCLient.request("insert into " + TEST_TABLE + " (name) values ('test')");
