@@ -61,6 +61,9 @@ public class ApiKeyCartoDBClient extends CartoDBClientIF {
     public ApiKeyCartoDBClient(String user, String apiKey) throws CartoDBException {
         this.user = user;
         this.apiKey = apiKey;
+        if(this.user == null || this.user.length() == 0) {
+            throw new CartoDBException("provided user is not valid");
+        }
         if(this.apiKey == null || this.apiKey.length() == 0) {
             throw new CartoDBException("provided API key is not valid");
         }
