@@ -5,8 +5,8 @@ import org.scribe.oauth.OAuthService;
 
 public class CartoDBAPI extends XAuthAPI
 {
-  private static final String REQUEST_TOKEN_RESOURCE = ".cartodb.com/oauth/request_token";
-  private static final String ACCESS_TOKEN_RESOURCE = ".cartodb.com/oauth/access_token";
+  private static final String REQUEST_TOKEN_RESOURCE = ".carto.com/oauth/request_token";
+  private static final String ACCESS_TOKEN_RESOURCE = ".carto.com/oauth/access_token";
   
   protected String username;
   protected String password;
