@@ -24,7 +24,7 @@ import com.cartodb.CartoDBException;
 public class SecuredCartoDBClient extends CartoDBClientIF{
 	
 	private static final String DEFAULT_API_VERSION = "1";
-	private static final String SQL_API_BASE_URL = "https://%s.cartodb.com/api/v%s/sql";
+	private static final String SQL_API_BASE_URL = "https://%s.carto.com/api/v%s/sql";
 	
 	private OAuthService oAuthService = null;
 	private Token accessToken = null;

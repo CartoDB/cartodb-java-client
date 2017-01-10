@@ -22,7 +22,7 @@ public class CartoDBClient extends CartoDBClientIF{
 	private static final String DEFAULT_API_VERSION = "1";
 	private static final String ENCODING = "UTF-8";
 	
-	private static final String SQL_API_BASE_URL = "http://%s.cartodb.com/api/v%s/sql?q=";
+	private static final String SQL_API_BASE_URL = "http://%s.carto.com/api/v%s/sql?q=";
 	
 	private String user;
 	private String apiVersion = DEFAULT_API_VERSION;
